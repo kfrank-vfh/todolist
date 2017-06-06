@@ -5,7 +5,6 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -83,7 +82,7 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
             HttpURLConnection connection = (HttpURLConnection) new URL(getUrl()).openConnection();
             connection.setRequestMethod("GET");
             connection.getInputStream();
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
         return true;

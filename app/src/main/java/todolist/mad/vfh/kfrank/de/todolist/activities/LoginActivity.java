@@ -30,6 +30,7 @@ public class LoginActivity extends Activity {
     private TextView wrongMailView;
 
     // VIEWS
+    private View all;
     private EditText emailField;
     private boolean validMail = false;
     private EditText passwordField;
@@ -45,14 +46,11 @@ public class LoginActivity extends Activity {
         // init activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        all = findViewById(R.id.loginActivityLayout);
+        all.setVisibility(View.INVISIBLE);
 
-        // check for connection
+        // determine application
         application = (TodoListApplication) getApplication();
-        if (!application.hasConnection()) {
-            // if no connection, then continue to todoitem overview without login
-            showNoConnectionDialog();
-            return;
-        } // else init view fields as usual
 
         // determine views
         emailField = (EditText) findViewById(R.id.email);
@@ -83,6 +81,7 @@ public class LoginActivity extends Activity {
         });
 
         // Handler zur Evaluation des Inputs
+        emailField.setText("s@bht.de"); // TODO rausnehmen
         emailField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -92,6 +91,7 @@ public class LoginActivity extends Activity {
             }
         });
 
+        passwordField.setText("000000"); // TODO rausnehmen
         passwordField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -100,6 +100,25 @@ public class LoginActivity extends Activity {
                 updateSigninButton();
             }
         });
+
+        // finally trigger async connection check on application
+        new AsyncProgressDialogTask<Object, Object, Boolean>(this, "Verbindung wird geprüft", "Bitte warten während die Verbindung zum Webserver geprüft wird.") {
+
+            @Override
+            protected Boolean doInBackground(Object... params) {
+                return application.checkForRemoteConnection();
+            }
+
+            @Override
+            protected void onPostExecute(Boolean hasConnection) {
+                super.onPostExecute(hasConnection);
+                if (hasConnection) {
+                    all.setVisibility(View.VISIBLE);
+                } else {
+                    showNoConnectionDialog();
+                }
+            }
+        };
     }
 
     private void validateEmail() {
@@ -133,7 +152,7 @@ public class LoginActivity extends Activity {
     }
 
     private void checkLogin() {
-        new AsyncProgressDialogTask<Void, Void, Void>(LoginActivity.this, "Bitten warten Sie...", "Nutzerdaten werden evaluiert.") {
+        new AsyncProgressDialogTask<Object, Object, Object>(LoginActivity.this, "Bitten warten Sie...", "Nutzerdaten werden evaluiert.") {
 
             private User user;
 
@@ -148,13 +167,13 @@ public class LoginActivity extends Activity {
             }
 
             @Override
-            protected Void doInBackground(Void... params) {
+            protected Object doInBackground(Object... params) {
                 validAuthenticataion = application.getAuthenticationOperations().authenticateUser(user);
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(Object aVoid) {
                 super.onPostExecute(aVoid);
                 if (validAuthenticataion) {
                     goToListView();

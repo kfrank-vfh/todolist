@@ -27,15 +27,16 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
             " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT, "
             + COLUMN_DESCRIPTION + " TEXT, "
-            + COLUMN_DONE + "TINYINT, "
-            + COLUMN_FAVOURITE + "TINYINT, "
-            + COLUMN_DUE_DATE + "BIGINT);";
+            + COLUMN_DONE + " TINYINT, "
+            + COLUMN_FAVOURITE + " TINYINT, "
+            + COLUMN_DUE_DATE + " BIGINT);";
 
     private static final String ID_SELECTOR = COLUMN_ID + "=?";
 
     private SQLiteDatabase dataBase;
 
     public LocalTodoItemCrudOperations(Context context) {
+        //context.deleteDatabase("de.kfrank.vfh.mad.todolist"); // TODO Zeile löschen
         this.dataBase = context.openOrCreateDatabase("de.kfrank.vfh.mad.todolist", SQLiteDatabase.CREATE_IF_NECESSARY, null);
         if (this.dataBase.getVersion() == 0) {
             dataBase.setLocale(Locale.getDefault());
@@ -104,7 +105,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
         return values;
     }
 
-    public TodoItem dataBaseItem2TodoItem(Cursor cursor) {
+    private TodoItem dataBaseItem2TodoItem(Cursor cursor) {
         long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
         String description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION));
@@ -115,6 +116,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
     }
 
     public void closeDataBase() {
+        // TODO irgendwo muss das noch aufgerufen werden
         this.dataBase.close();
     }
 }
