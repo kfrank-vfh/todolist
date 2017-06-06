@@ -7,20 +7,13 @@
     android:orientation="vertical"
     tools:context="todolist.mad.vfh.kfrank.de.todolist.activities.TodoOverviewActivity">
 
-    <ScrollView
+    <ListView
+        android:id="@+id/todoList"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <ListView
-            android:id="@+id/todoList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
-    </ScrollView>
-
+    </ListView>
 
     <Button
         android:id="@+id/addTodo"
