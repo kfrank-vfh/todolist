@@ -14,16 +14,16 @@ import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 
 public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
 
-    public static final String TABLE_NAME = "todoitems";
+    private static final String TABLE_NAME = "todoitems";
 
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_DONE = "done";
-    public static final String COLUMN_FAVOURITE = "favourite";
-    public static final String COLUMN_DUE_DATE = "dueDate";
+    private static final String COLUMN_ID = "id";
+    private static final String COLUMN_NAME = "name";
+    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_DONE = "done";
+    private static final String COLUMN_FAVOURITE = "favourite";
+    private static final String COLUMN_DUE_DATE = "dueDate";
 
-    public static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME +
+    private static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME +
             " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT, "
             + COLUMN_DESCRIPTION + " TEXT, "
@@ -36,7 +36,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
     private SQLiteDatabase dataBase;
 
     public LocalTodoItemCrudOperations(Context context) {
-        //context.deleteDatabase("de.kfrank.vfh.mad.todolist"); // TODO Zeile löschen
+        context.deleteDatabase("de.kfrank.vfh.mad.todolist"); // TODO Zeile löschen
         this.dataBase = context.openOrCreateDatabase("de.kfrank.vfh.mad.todolist", SQLiteDatabase.CREATE_IF_NECESSARY, null);
         if (this.dataBase.getVersion() == 0) {
             dataBase.setLocale(Locale.getDefault());
