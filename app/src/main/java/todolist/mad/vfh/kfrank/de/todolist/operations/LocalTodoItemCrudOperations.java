@@ -47,7 +47,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
 
     @Override
     public TodoItem createTodoItem(TodoItem item) {
-        long newItemId = this.dataBase.insert(TABLE_NAME, null, todoItem2DataBaseItem(item));
+        long newItemId = this.dataBase.insert(TABLE_NAME, null, todoItem2DataBaseItem(item, true));
         item.setId(newItemId);
         return item;
     }
@@ -84,7 +84,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
 
     @Override
     public TodoItem updateTodoItem(TodoItem item) {
-        this.dataBase.update(TABLE_NAME, todoItem2DataBaseItem(item), ID_SELECTOR, new String[] {Long.toString(item.getId())});
+        this.dataBase.update(TABLE_NAME, todoItem2DataBaseItem(item, false), ID_SELECTOR, new String[] {Long.toString(item.getId())});
         return item;
     }
 
@@ -94,9 +94,11 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
         return true;
     }
 
-    private ContentValues todoItem2DataBaseItem(TodoItem item) {
+    private ContentValues todoItem2DataBaseItem(TodoItem item, boolean omitId) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_ID, item.getId());
+        if (!omitId) {
+            values.put(COLUMN_ID, item.getId());
+        }
         values.put(COLUMN_NAME, item.getName());
         values.put(COLUMN_DESCRIPTION, item.getDescription());
         values.put(COLUMN_DONE, item.isDone() ? 1 : 0);

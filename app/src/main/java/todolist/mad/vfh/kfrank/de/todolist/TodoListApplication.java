@@ -3,7 +3,11 @@ package todolist.mad.vfh.kfrank.de.todolist;
 import android.app.Application;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
+import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 import todolist.mad.vfh.kfrank.de.todolist.operations.DelegateTodoItemCrudOperationsImpl;
 import todolist.mad.vfh.kfrank.de.todolist.operations.IAuthenticationOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.RemoteAuthenticationOperations;
@@ -37,11 +41,12 @@ public class TodoListApplication extends Application {
             todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(remoteTodoItemCrudOperations, new LocalTodoItemCrudOperations(this));
             authenticationOperations = new RemoteAuthenticationOperations(remoteAddress);
         }
+        replaceWithRandomItems();
         return hasConnection;
     }
 
     public String getWorkingRemoteAddress() {
-        for (String url : Arrays.asList("http://192.168.2.101:8080/api", "http://192.168.193.2:8080/api", "http://10.0.3.2:8080/api/", "http://10.0.2.2:8080/api/", "http://192.168.178.47:8080/api/")) {
+        for (String url : Arrays.asList("http://192.168.2.101:8080/api")) {
             if (new RemoteTodoItemCrudOperations(url).hasConnection()) {
                 return url;
             }
@@ -55,5 +60,42 @@ public class TodoListApplication extends Application {
 
     public IAuthenticationOperations getAuthenticationOperations() {
         return authenticationOperations;
+    }
+
+    private void replaceWithRandomItems() {
+        // first delete all Items
+        List<TodoItem> list = todoItemCrudOperations.readAllTodoItems();
+        for (TodoItem item : list) {
+            todoItemCrudOperations.deleteTodoItem(item.getId());
+        }
+        // then add random items
+        for (TodoItem item : generateTodoItems(10)) {
+            todoItemCrudOperations.createTodoItem(item);
+        }
+    }
+
+    private List<TodoItem> generateTodoItems(int count) {
+        List<TodoItem> list = new LinkedList<>();
+        for (int i = 1; i <= count; i++) {
+            // TODO
+            TodoItem item = new TodoItem();
+            item.setName("Todo " + i);
+            item.setDescription(getRandomText((int) (Math.random() * 50 + 20)));
+            item.setDone(Math.random() < 0.5);
+            item.setFavourite(Math.random() < 0.5);
+            long now = new Date().getTime();
+            item.setDueDate(new Date(now + (long)((Math.random() -0.5) * 60480000)));
+            list.add(item);
+        }
+        return list;
+    }
+
+    private String getRandomText(int length) {
+        StringBuilder builder = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            char c = (char) (Math.random() * 94 + 32);
+            builder.append(c);
+        }
+        return builder.toString();
     }
 }
