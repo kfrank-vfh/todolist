@@ -33,6 +33,9 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
             @Override
             protected Object doInBackground(Object... params) {
                 addAll(TodoListAdapter.this.crud.readAllTodoItems());
+                if (comparator != null) {
+                    sort(comparator);
+                }
                 return null;
             }
         };
@@ -74,6 +77,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
         if (comparator != null) {
             sort(comparator);
         }
+        notifyDataSetChanged();
         new EmptyAsyncTask() {
             @Override
             protected Object doInBackground(Object... params) {
@@ -95,7 +99,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
         CheckBox favouriteBox = (CheckBox) convertView.findViewById(R.id.favourite);
         TodoItem item = getItem(position);
         nameView.setText(item.getName());
-        dueDateView.setText(item.getDueDate().toString());
+        dueDateView.setText(item.getDueDate() == null ? null : TodoItem.dueDateFormat.format(item.getDueDate()));
         doneBox.setChecked(item.isDone());
         favouriteBox.setChecked(item.isFavourite());
         return convertView;

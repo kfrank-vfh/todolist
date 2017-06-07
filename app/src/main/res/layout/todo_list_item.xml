@@ -9,20 +9,20 @@
         android:id="@+id/nameAndDueDate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Todo Item Name"/>
+            android:text="Todo Item Name" />
 
         <TextView
             android:id="@+id/dueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fälligkeitsdatum"/>
+            android:text="Fälligkeitsdatum" />
 
     </LinearLayout>
 
@@ -30,12 +30,16 @@
         android:id="@+id/favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="F?"/>
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="F?" />
 
     <CheckBox
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E?"/>
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="E?" />
 
 </LinearLayout>

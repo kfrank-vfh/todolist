@@ -1,6 +1,7 @@
 package todolist.mad.vfh.kfrank.de.todolist.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Date;
  */
 
 public class TodoItem implements Serializable {
+
+    public static final SimpleDateFormat dueDateFormat =new SimpleDateFormat("dd.MM.yyyy' - 'hh:mm' Uhr'");
 
     private long id;
 
@@ -79,5 +82,37 @@ public class TodoItem implements Serializable {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void adoptData(TodoItem item) {
+        if (item == null) {
+            return;
+        }
+        setName(item.getName());
+        setDescription(item.getDescription());
+        setDueDate(item.getDueDate());
+        setDone(item.isDone());
+        setFavourite(item.isFavourite());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof TodoItem)) {
+            return false;
+        }
+        TodoItem item = (TodoItem) obj;
+        return objectsEqual(name, item.getName()) &&
+               objectsEqual(description, item.getDescription()) &&
+               objectsEqual(dueDate, item.getDueDate()) &&
+               objectsEqual(done, item.isDone()) &&
+               objectsEqual(favourite, item.isFavourite());
+    }
+
+    private boolean objectsEqual(Object o1, Object o2) {
+        if (o1 == null ^ o2 == null) {
+            return false;
+        } else {
+            return o1 == null ? true : o1.equals(o2);
+        }
     }
 }

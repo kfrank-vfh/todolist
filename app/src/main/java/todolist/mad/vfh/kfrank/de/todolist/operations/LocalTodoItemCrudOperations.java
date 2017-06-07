@@ -103,7 +103,7 @@ public class LocalTodoItemCrudOperations implements ITodoItemCrudOperations {
         values.put(COLUMN_DESCRIPTION, item.getDescription());
         values.put(COLUMN_DONE, item.isDone() ? 1 : 0);
         values.put(COLUMN_FAVOURITE, item.isFavourite() ? 1 : 0);
-        values.put(COLUMN_DUE_DATE, item.getDueDate().getTime());
+        values.put(COLUMN_DUE_DATE, item.getDueDate() == null ? null : item.getDueDate().getTime());
         return values;
     }
 

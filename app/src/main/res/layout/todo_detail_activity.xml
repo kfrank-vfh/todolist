@@ -18,6 +18,7 @@
             android:text="Name"/>
 
         <EditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Todo"/>
@@ -28,6 +29,7 @@
             android:text="Beschreibung"/>
 
         <EditText
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="5"
@@ -39,11 +41,14 @@
             android:text="Fällig am"/>
 
         <EditText
+            android:id="@+id/dueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fälligkeitsdatum"/>
+            android:hint="Fälligkeitsdatum"
+            android:enabled="false"/>
 
         <Switch
+            android:id="@+id/done"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Todo Erledigt?  "
@@ -55,6 +60,7 @@
 
         <!-- TODO durch TextView mit Stern Image ersetzen -->
         <Switch
+            android:id="@+id/favourite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Favorit?  "
