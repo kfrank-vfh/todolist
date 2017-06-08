@@ -16,7 +16,9 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Todo Item Name" />
+            android:text="Todo Item Name"
+            android:textSize="20dp"
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/dueDate"
@@ -26,13 +28,14 @@
 
     </LinearLayout>
 
-    <CheckBox
+    <ImageView
         android:id="@+id/favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="F?" />
+        android:src="@drawable/ic_grade_black_24dp"
+        android:layout_marginRight="10dp"/>
 
     <CheckBox
         android:id="@+id/done"
@@ -40,6 +43,8 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="E?" />
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_marginRight="10dp"/>
 
 </LinearLayout>

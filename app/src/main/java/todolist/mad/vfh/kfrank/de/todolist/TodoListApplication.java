@@ -84,7 +84,7 @@ public class TodoListApplication extends Application {
             item.setDone(Math.random() < 0.5);
             item.setFavourite(Math.random() < 0.5);
             long now = new Date().getTime();
-            item.setDueDate(new Date(now + (long)((Math.random() -0.5) * 60480000)));
+            item.setDueDate(new Date(now + (long)((Math.random() -0.5) * 604800000)));
             list.add(item);
         }
         return list;

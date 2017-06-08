@@ -3,5 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
+    <color name="transparent_red">#44FF0000</color>
+    <color name="black">#000000</color>
+    <color name="star_grey">#AAAAAA</color>
+    <color name="star_yellow">#E1DE00</color>
 </resources>

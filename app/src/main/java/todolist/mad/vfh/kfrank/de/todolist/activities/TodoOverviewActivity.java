@@ -128,7 +128,7 @@ public class TodoOverviewActivity extends AppCompatActivity {
             public int compare(TodoItem o1, TodoItem o2) {
                 if (o1.isDone() == o2.isDone()) {
                     if (o1.isFavourite() == o2.isFavourite()) {
-                        return (o1.getDueDate() == null || o2.getDueDate() == null) ? 0 : o1.getDueDate().compareTo(o2.getDueDate());
+                        return (o1.getDueDate() == null || o2.getDueDate() == null) ? 0 : (int) (o1.getDueDate().getTime() - o2.getDueDate().getTime());
                     }
                     return o1.isFavourite() ? -1 : 1;
                 }
@@ -142,10 +142,10 @@ public class TodoOverviewActivity extends AppCompatActivity {
             @Override
             public int compare(TodoItem o1, TodoItem o2) {
                 if (o1.isDone() == o2.isDone()) {
-                    if (o1.getDueDate() == null || o2.getDueDate() == null || o1.getDueDate().compareTo(o2.getDueDate()) == 0) {
+                    if (o1.getDueDate() == null || o2.getDueDate() == null || o1.getDueDate().getTime() - o2.getDueDate().getTime() == 0) {
                         return o1.isFavourite() ? -1 : 1;
                     }
-                    return o1.getDueDate().compareTo(o2.getDueDate());
+                    return (int) (o1.getDueDate().getTime() - o2.getDueDate().getTime());
                 }
                 return o1.isDone() ? 1 : -1;
             }
