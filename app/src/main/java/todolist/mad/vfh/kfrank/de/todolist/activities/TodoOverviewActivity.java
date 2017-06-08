@@ -3,9 +3,10 @@ package todolist.mad.vfh.kfrank.de.todolist.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.Comparator;
@@ -17,20 +18,32 @@ import todolist.mad.vfh.kfrank.de.todolist.util.TodoListAdapter;
 
 public class TodoOverviewActivity extends AppCompatActivity {
 
+    // REQUEST CODES
     private static final int NEW_ITEM_CODE = 1;
-
     private static final int UPDATE_ITEM_CODE = 2;
 
+    // COMPARATORS
+    private static final Comparator<TodoItem> FAVOURITE_COMPARATOR = getFavouriteComparator();
+    private static final Comparator<TodoItem> DATE_COMPARATOR = getDateComparator();
+
+    // OPTION MENU ITEMS
+    private MenuItem addTodoItem;
+    private MenuItem favouriteSortingItem;
+    private MenuItem dateSortingItem;
+
+    // OTHER VARIABLES
     private TodoListAdapter adapter;
+    private Comparator<TodoItem> currentComparator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // init activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todo_overview_activity);
 
+        // create TodoItem Adapter
         TodoListApplication application = (TodoListApplication) getApplication();
         adapter = new TodoListAdapter(this, application.getTodoItemCrudOperations());
-        adapter.setComparator(getComparator());
 
         // setze den Adapter auf die Listenansicht
         ListView listView = (ListView) findViewById(R.id.todoList);
@@ -43,15 +56,38 @@ public class TodoOverviewActivity extends AppCompatActivity {
             }
         });
 
-        // setze click listener für button
-        Button button = (Button) findViewById(R.id.addTodo);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TodoItem item = new TodoItem();
-                showDetailViewToItem(item, NEW_ITEM_CODE);
-            }
-        });
+        // initiiere den Comparator
+        setComparator(FAVOURITE_COMPARATOR);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // populate options menu
+        getMenuInflater().inflate(R.menu.todo_overview_options_menu, menu);
+        // get all option menu items
+        addTodoItem = menu.findItem(R.id.addTodo);
+        favouriteSortingItem = menu.findItem(R.id.favouriteSorting);
+        dateSortingItem = menu.findItem(R.id.dateSorting);
+        // set correct icons
+        favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_grade_black_24dp_checked : R.drawable.ic_grade_black_24dp);
+        dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_date_range_black_24dp_checked : R.drawable.ic_date_range_black_24dp);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.equals(addTodoItem)) {
+            showDetailViewToItem(new TodoItem(), NEW_ITEM_CODE);
+            return true;
+        } else if (item.equals(favouriteSortingItem)) {
+            setComparator(FAVOURITE_COMPARATOR);
+            return true;
+        } else if (item.equals(dateSortingItem)) {
+            setComparator(DATE_COMPARATOR);
+            return true;
+        }
+        return false;
     }
 
     private void showDetailViewToItem(TodoItem item, int requestCode) {
@@ -72,7 +108,21 @@ public class TodoOverviewActivity extends AppCompatActivity {
         }
     }
 
-    private Comparator<TodoItem> getComparator() {
+    private void setComparator(Comparator<TodoItem> comparator) {
+        if (comparator.equals(currentComparator)) {
+            return;
+        }
+        currentComparator = comparator;
+        if (favouriteSortingItem != null) {
+            favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_grade_black_24dp_checked : R.drawable.ic_grade_black_24dp);
+        }
+        if (dateSortingItem != null) {
+            dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_date_range_black_24dp_checked : R.drawable.ic_date_range_black_24dp);
+        }
+        adapter.setComparator(comparator);
+    }
+
+    private static Comparator<TodoItem> getFavouriteComparator() {
         return new Comparator<TodoItem>() {
             @Override
             public int compare(TodoItem o1, TodoItem o2) {
@@ -81,6 +131,21 @@ public class TodoOverviewActivity extends AppCompatActivity {
                         return (o1.getDueDate() == null || o2.getDueDate() == null) ? 0 : o1.getDueDate().compareTo(o2.getDueDate());
                     }
                     return o1.isFavourite() ? -1 : 1;
+                }
+                return o1.isDone() ? 1 : -1;
+            }
+        };
+    }
+
+    private static Comparator<TodoItem> getDateComparator() {
+        return new Comparator<TodoItem>() {
+            @Override
+            public int compare(TodoItem o1, TodoItem o2) {
+                if (o1.isDone() == o2.isDone()) {
+                    if (o1.getDueDate() == null || o2.getDueDate() == null || o1.getDueDate().compareTo(o2.getDueDate()) == 0) {
+                        return o1.isFavourite() ? -1 : 1;
+                    }
+                    return o1.getDueDate().compareTo(o2.getDueDate());
                 }
                 return o1.isDone() ? 1 : -1;
             }
