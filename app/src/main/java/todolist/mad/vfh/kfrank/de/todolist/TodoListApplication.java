@@ -21,7 +21,7 @@ import todolist.mad.vfh.kfrank.de.todolist.operations.LocalTodoItemCrudOperation
 
 public class TodoListApplication extends Application {
 
-    private ITodoItemCrudOperations todoItemCrudOperations;
+    private DelegateTodoItemCrudOperationsImpl todoItemCrudOperations;
 
     private IAuthenticationOperations authenticationOperations;
 
@@ -37,8 +37,9 @@ public class TodoListApplication extends Application {
         String remoteAddress = getWorkingRemoteAddress();
         boolean hasConnection = remoteAddress != null;
         if (hasConnection) {
+            LocalTodoItemCrudOperations localTodoItemCrudOperations = todoItemCrudOperations.getLocalTodoItemCrudOperations();
             RemoteTodoItemCrudOperations remoteTodoItemCrudOperations = new RemoteTodoItemCrudOperations(remoteAddress);
-            todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(remoteTodoItemCrudOperations, new LocalTodoItemCrudOperations(this));
+            todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(remoteTodoItemCrudOperations, localTodoItemCrudOperations);
             authenticationOperations = new RemoteAuthenticationOperations(remoteAddress);
         }
         replaceWithRandomItems();

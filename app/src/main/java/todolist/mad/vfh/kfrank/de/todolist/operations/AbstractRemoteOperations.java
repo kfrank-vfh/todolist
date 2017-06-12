@@ -37,11 +37,13 @@ public abstract class AbstractRemoteOperations<T> {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url + path).openConnection();
             connection.setRequestMethod(method);
-            if (Arrays.asList("POST", "PUT").contains(method)) {
+            if (Arrays.asList("POST", "PUT", "DELETE").contains(method)) {
                 connection.setRequestProperty("Content-Type", "application/json");
-                connection.setDoOutput(true);
-                OutputStream outputStream = connection.getOutputStream();
-                outputStream.write(convertToJsonString(item).getBytes());
+                if (item != null) {
+                    connection.setDoOutput(true);
+                    OutputStream outputStream = connection.getOutputStream();
+                    outputStream.write(convertToJsonString(item).getBytes());
+                }
             }
             InputStream inputStream = connection.getInputStream();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {

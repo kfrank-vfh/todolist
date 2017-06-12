@@ -39,6 +39,14 @@ public class DelegateTodoItemCrudOperationsImpl implements ITodoItemCrudOperatio
         }
     }
 
+    public RemoteTodoItemCrudOperations getRemoteTodoItemCrudOperations() {
+        return remoteTodoItemCrudOperations;
+    }
+
+    public LocalTodoItemCrudOperations getLocalTodoItemCrudOperations() {
+        return localTodoItemCrudOperations;
+    }
+
     @Override
     public TodoItem createTodoItem(TodoItem item) {
         item = localTodoItemCrudOperations.createTodoItem(item);
