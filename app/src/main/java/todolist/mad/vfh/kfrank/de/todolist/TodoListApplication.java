@@ -2,6 +2,7 @@ package todolist.mad.vfh.kfrank.de.todolist;
 
 import android.app.Application;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -85,7 +86,13 @@ public class TodoListApplication extends Application {
             item.setDone(Math.random() < 0.5);
             item.setFavourite(Math.random() < 0.5);
             long now = new Date().getTime();
-            item.setDueDate(new Date(now + (long)((Math.random() -0.5) * 604800000)));
+            try {
+                Date date = new Date(now + (long) ((Math.random() - 0.5) * 604800000));
+                item.setDueDate(TodoItem.dueDateFormat.parse(TodoItem.dueDateFormat.format(date)));
+                // durch das Parsing werden die (Milli)Sekunden weg getrimmt
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             list.add(item);
         }
         return list;

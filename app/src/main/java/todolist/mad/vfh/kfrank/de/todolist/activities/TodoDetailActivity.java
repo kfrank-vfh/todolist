@@ -95,8 +95,10 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     private TodoItem getTodoItemFromGUI() {
         TodoItem item = new TodoItem();
-        item.setName(nameView.getText().toString());
-        item.setDescription(descriptionView.getText().toString());
+        String name = nameView.getText().toString();
+        item.setName((name == null || name.trim().isEmpty()) ? null : name);
+        String description = descriptionView.getText().toString();
+        item.setDescription((description == null || description.trim().isEmpty()) ? null : description);
         try {
             String dueDateString = dueDateView.getText().toString();
             item.setDueDate((dueDateString == null | dueDateString.trim().isEmpty()) ? null : TodoItem.dueDateFormat.parse(dueDateString));
