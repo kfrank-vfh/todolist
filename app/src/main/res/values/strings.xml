@@ -4,19 +4,10 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password must be 6 numbers</string>
-    <string name="error_login_failed">Login failed</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="action_sign_in">Einloggen</string>
+    <string name="error_invalid_email">Es muss eine Email Adresse angegeben werden!</string>
+    <string name="error_invalid_password">Es muss ein Password aus 6 Zahlen angegeben werden!</string>
+    <string name="error_login_failed">Die Anmeldedaten sind nicht korrekt!</string>
+    <string name="title_activity_login">TodoList</string>
 
-    <string-array name="login_emails">
-        <item>s@bht.de</item>
-    </string-array>
 </resources>
