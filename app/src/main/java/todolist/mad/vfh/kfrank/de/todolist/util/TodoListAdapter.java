@@ -77,6 +77,13 @@ public class TodoListAdapter extends ArrayAdapter<TodoItem> {
     }
 
     public void itemChanged(final TodoItem item) {
+        for (int i = 0; i < getCount(); i++) {
+            TodoItem toUpdate = getItem(i);
+            if (toUpdate.getId() == item.getId()) {
+                toUpdate.adoptData(item);
+                break;
+            }
+        }
         if (comparator != null) {
             sort(comparator);
         }
