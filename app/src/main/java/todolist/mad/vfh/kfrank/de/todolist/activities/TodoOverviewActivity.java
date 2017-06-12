@@ -102,13 +102,18 @@ public class TodoOverviewActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == TodoDetailActivity.NO_OP_CODE) {
+            return;
+        }
+        TodoItem item = (TodoItem) data.getExtras().get("item");
         if (resultCode == TodoDetailActivity.SAVE_ITEM_CODE) {
-            TodoItem item = (TodoItem) data.getExtras().get("item");
             if (requestCode == NEW_ITEM_CODE) {
                 adapter.add(item);
             } else if (requestCode == UPDATE_ITEM_CODE) {
                 adapter.itemChanged(item);
             }
+        } else if (resultCode == TodoDetailActivity.DELETE_ITEM_CODE) {
+            adapter.remove(item);
         }
     }
 

@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import android.widget.TimePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,7 +29,8 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     // RESPONSE CODES
     public static final int SAVE_ITEM_CODE = 1;
-    public static final int NO_OP_CODE = 2;
+    public static final int DELETE_ITEM_CODE = 2;
+    public static final int NO_OP_CODE = 3;
 
     // VIEWS
     private EditText nameView;
@@ -35,6 +39,11 @@ public class TodoDetailActivity extends AppCompatActivity {
     private Switch doneView;
     private Switch favouriteView;
 
+    // OPTION MENU ITEMS
+    private MenuItem saveTodoItem;
+    private MenuItem deleteTodoItem;
+
+    // TODOITEM OF DETAIL VIEW
     private TodoItem item;
 
     @Override
@@ -107,6 +116,47 @@ public class TodoDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // populate options menu
+        getMenuInflater().inflate(R.menu.todo_details_options_menu, menu);
+        // get all option menu items
+        saveTodoItem = menu.findItem(R.id.saveTodo);
+        deleteTodoItem = menu.findItem(R.id.deleteTodo);
+        // set visibility of deleteTodoItem
+        deleteTodoItem.setVisible(item.getId() >= 0);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.equals(saveTodoItem)) {
+            returnToOverview(SAVE_ITEM_CODE);
+            return true;
+        } else if(item.equals(deleteTodoItem)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Todo löschen");
+            builder.setMessage("Soll das Todo wirklich gelöscht werden?");
+            builder.setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    returnToOverview(DELETE_ITEM_CODE);
+                }
+            });
+            builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.create().show();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onBackPressed() {
         if (item.equals(getTodoItemFromGUI())) {
             super.onBackPressed();
@@ -140,7 +190,7 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     private void returnToOverview(int responseCode) {
         Intent intent = new Intent();
-        if (responseCode == SAVE_ITEM_CODE) {
+        if (Arrays.asList(SAVE_ITEM_CODE, DELETE_ITEM_CODE).contains(responseCode)) {
             item.adoptData(getTodoItemFromGUI());
             intent.putExtra("item", item);
         }
