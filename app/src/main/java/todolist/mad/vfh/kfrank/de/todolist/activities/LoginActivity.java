@@ -26,16 +26,17 @@ public class LoginActivity extends Activity {
     private static final String PASSWORD_REGEX = "\\d{6}";
 
     // FLAGS
+    private boolean alreadyLoggedIn = false;
     private boolean validPassword = false;
-    private TextView wrongMailView;
+    private boolean validMail = false;
 
     // VIEWS
     private View all;
     private EditText emailField;
-    private boolean validMail = false;
     private EditText passwordField;
-    private TextView wrongPasswordView;
     private Button signinButton;
+    private TextView wrongMailView;
+    private TextView wrongPasswordView;
     private TextView loginFailedView;
 
     // OTHER
@@ -119,6 +120,10 @@ public class LoginActivity extends Activity {
                 }
             }
         };
+
+        validateEmail();
+        validatePassword();
+        updateSigninButton();
     }
 
     private void validateEmail() {
@@ -184,7 +189,16 @@ public class LoginActivity extends Activity {
         };
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (alreadyLoggedIn) {
+            finish();
+        }
+    }
+
     private void goToListView() {
+        alreadyLoggedIn = true;
         startActivity(new Intent(this, TodoOverviewActivity.class));
     }
 }

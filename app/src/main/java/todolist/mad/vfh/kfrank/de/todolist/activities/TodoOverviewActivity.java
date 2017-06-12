@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Comparator;
 
@@ -25,6 +26,9 @@ public class TodoOverviewActivity extends AppCompatActivity {
     // COMPARATORS
     private static final Comparator<TodoItem> FAVOURITE_COMPARATOR = getFavouriteComparator();
     private static final Comparator<TodoItem> DATE_COMPARATOR = getDateComparator();
+
+    // FLAGS
+    private boolean backAlreadyPressed = false;
 
     // OPTION MENU ITEMS
     private MenuItem addTodoItem;
@@ -106,6 +110,22 @@ public class TodoOverviewActivity extends AppCompatActivity {
                 adapter.itemChanged(item);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backAlreadyPressed) {
+            finish();
+        } else {
+            Toast.makeText(this, "Nochmaliges Drücken beendet die App!", Toast.LENGTH_SHORT).show();
+            backAlreadyPressed = true;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        backAlreadyPressed = false;
     }
 
     private void setComparator(Comparator<TodoItem> comparator) {
