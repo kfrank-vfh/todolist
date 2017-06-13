@@ -72,7 +72,18 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"/>
 
-        <!-- TODO ListView mit den verknüpften Kontakten -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kontakte:"/>
+
+        <todolist.mad.vfh.kfrank.de.todolist.util.ContactListView
+            android:id="@+id/contactList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </todolist.mad.vfh.kfrank.de.todolist.util.ContactListView>
+
     </LinearLayout>
 
 

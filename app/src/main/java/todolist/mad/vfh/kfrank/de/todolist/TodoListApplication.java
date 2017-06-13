@@ -11,10 +11,12 @@ import java.util.List;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 import todolist.mad.vfh.kfrank.de.todolist.operations.DelegateTodoItemCrudOperationsImpl;
 import todolist.mad.vfh.kfrank.de.todolist.operations.IAuthenticationOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.IContactAccessOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.RemoteAuthenticationOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.RemoteTodoItemCrudOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.ITodoItemCrudOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.LocalTodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.TodoContactAccessOperations;
 
 /**
  * Created by kfrank on 04.06.2017.
@@ -26,12 +28,15 @@ public class TodoListApplication extends Application {
 
     private IAuthenticationOperations authenticationOperations;
 
+    private IContactAccessOperations contactAccessOperations;
+
     @Override
     public void onCreate() {
         super.onCreate();
         // assemble crud access
         LocalTodoItemCrudOperations localTodoItemCrudOperations = new LocalTodoItemCrudOperations(this);
         todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(null, localTodoItemCrudOperations);
+        contactAccessOperations = new TodoContactAccessOperations(getContentResolver());
     }
 
     public boolean checkForRemoteConnection() {
@@ -62,6 +67,10 @@ public class TodoListApplication extends Application {
 
     public IAuthenticationOperations getAuthenticationOperations() {
         return authenticationOperations;
+    }
+
+    public IContactAccessOperations getContactAccessOperations() {
+        return contactAccessOperations;
     }
 
     private void replaceWithRandomItems() {
