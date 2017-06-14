@@ -3,6 +3,8 @@ package todolist.mad.vfh.kfrank.de.todolist.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by kfrank on 03.06.2017.
@@ -10,7 +12,7 @@ import java.util.Date;
 
 public class TodoItem implements Serializable {
 
-    public static final SimpleDateFormat dueDateFormat =new SimpleDateFormat("dd.MM.yyyy' - 'hh:mm' Uhr'");
+    public static final SimpleDateFormat dueDateFormat = new SimpleDateFormat("dd.MM.yyyy' - 'hh:mm' Uhr'");
 
     private long id;
 
@@ -23,6 +25,8 @@ public class TodoItem implements Serializable {
     private boolean favourite;
 
     private Date dueDate;
+
+    private List<Contact> contacts = new LinkedList<>();
 
     public TodoItem() {
     }
@@ -84,6 +88,18 @@ public class TodoItem implements Serializable {
         this.dueDate = dueDate;
     }
 
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void addContact(Contact contact) {
+        contacts.add(contact);
+    }
+
+    public void removeContact(Contact contact) {
+        contacts.remove(contact);
+    }
+
     public void adoptData(TodoItem item) {
         if (item == null) {
             return;
@@ -93,6 +109,7 @@ public class TodoItem implements Serializable {
         setDueDate(item.getDueDate());
         setDone(item.isDone());
         setFavourite(item.isFavourite());
+        contacts = item.getContacts();
     }
 
     @Override
@@ -102,10 +119,11 @@ public class TodoItem implements Serializable {
         }
         TodoItem item = (TodoItem) obj;
         return objectsEqual(name, item.getName()) &&
-               objectsEqual(description, item.getDescription()) &&
-               objectsEqual(dueDate, item.getDueDate()) &&
-               objectsEqual(done, item.isDone()) &&
-               objectsEqual(favourite, item.isFavourite());
+                objectsEqual(description, item.getDescription()) &&
+                objectsEqual(dueDate, item.getDueDate()) &&
+                objectsEqual(done, item.isDone()) &&
+                objectsEqual(favourite, item.isFavourite()) &&
+                listsEqual(contacts, item.getContacts());
     }
 
     private boolean objectsEqual(Object o1, Object o2) {
@@ -113,6 +131,14 @@ public class TodoItem implements Serializable {
             return false;
         } else {
             return o1 == null ? true : o1.equals(o2);
+        }
+    }
+
+    private boolean listsEqual(List<?> l1, List<?> l2) {
+        if (l1 == null ^ l2 == null) {
+            return false;
+        } else {
+            return l1.containsAll(l2) && l2.containsAll(l1);
         }
     }
 }

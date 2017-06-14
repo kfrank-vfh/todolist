@@ -20,7 +20,7 @@ public class RemoteAuthenticationOperations extends AbstractRemoteOperations<Use
     private static final String USERS_PATH = "/users";
 
     public RemoteAuthenticationOperations(String url) {
-        super(url + USERS_PATH);
+        super(url + USERS_PATH, null);
     }
 
     @Override

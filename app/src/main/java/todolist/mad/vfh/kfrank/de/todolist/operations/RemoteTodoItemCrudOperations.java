@@ -8,9 +8,11 @@ import org.codehaus.jackson.node.ObjectNode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 
 public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoItem> implements ITodoItemCrudOperations {
@@ -21,11 +23,12 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
     private static final String FIELD_DONE = "done";
     private static final String FIELD_FAVOURITE = "favourite";
     private static final String FIELD_DUE_DATE = "expiry";
+    private static final String FIELD_CONTACTS = "contacts";
 
     private static final String TODO_PATH = "/todos";
 
-    public RemoteTodoItemCrudOperations(String url) {
-        super(url + TODO_PATH);
+    public RemoteTodoItemCrudOperations(String url, IContactAccessOperations contactAccessOperations) {
+        super(url + TODO_PATH, contactAccessOperations);
     }
 
     @Override
@@ -97,6 +100,11 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
         objectNode.put(FIELD_DONE, item.isDone());
         objectNode.put(FIELD_FAVOURITE, item.isFavourite());
         objectNode.put(FIELD_DUE_DATE, item.getDueDate().getTime());
+        ArrayNode contacts = JsonNodeFactory.instance.arrayNode();
+        for (Contact _contact : item.getContacts()) {
+            contacts.add(_contact.getId());
+        }
+        objectNode.put(FIELD_CONTACTS, contacts);
         return objectNode;
     }
 
@@ -107,6 +115,16 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
         boolean done = objectNode.get(FIELD_DONE).getBooleanValue();
         boolean favourite = objectNode.get(FIELD_FAVOURITE).getBooleanValue();
         long dueDate = objectNode.get(FIELD_DUE_DATE).getLongValue();
-        return new TodoItem(id, name, description, done, favourite, new Date(dueDate));
+        TodoItem item = new TodoItem(id, name, description, done, favourite, new Date(dueDate));
+        JsonNode jsonNode = objectNode.get(FIELD_CONTACTS);
+        if (jsonNode != null && jsonNode instanceof ArrayNode) {
+            ArrayNode contactsNode = (ArrayNode) jsonNode;
+            Iterator<JsonNode> iterator = contactsNode.getElements();
+            while (iterator.hasNext()) {
+                String contactId = iterator.next().getTextValue();
+                item.addContact(getContactToId(contactId));
+            }
+        }
+        return item;
     }
 }

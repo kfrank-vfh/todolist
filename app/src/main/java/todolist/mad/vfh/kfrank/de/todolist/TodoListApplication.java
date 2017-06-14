@@ -34,9 +34,9 @@ public class TodoListApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // assemble crud access
-        LocalTodoItemCrudOperations localTodoItemCrudOperations = new LocalTodoItemCrudOperations(this);
-        todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(null, localTodoItemCrudOperations);
         contactAccessOperations = new TodoContactAccessOperations(getContentResolver());
+        LocalTodoItemCrudOperations localTodoItemCrudOperations = new LocalTodoItemCrudOperations(this, contactAccessOperations);
+        todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(null, localTodoItemCrudOperations);
     }
 
     public boolean checkForRemoteConnection() {
@@ -44,7 +44,7 @@ public class TodoListApplication extends Application {
         boolean hasConnection = remoteAddress != null;
         if (hasConnection) {
             LocalTodoItemCrudOperations localTodoItemCrudOperations = todoItemCrudOperations.getLocalTodoItemCrudOperations();
-            RemoteTodoItemCrudOperations remoteTodoItemCrudOperations = new RemoteTodoItemCrudOperations(remoteAddress);
+            RemoteTodoItemCrudOperations remoteTodoItemCrudOperations = new RemoteTodoItemCrudOperations(remoteAddress, contactAccessOperations);
             todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(remoteTodoItemCrudOperations, localTodoItemCrudOperations);
             authenticationOperations = new RemoteAuthenticationOperations(remoteAddress);
         }
@@ -54,7 +54,7 @@ public class TodoListApplication extends Application {
 
     public String getWorkingRemoteAddress() {
         for (String url : Arrays.asList("http://192.168.2.101:8080/api")) {
-            if (new RemoteTodoItemCrudOperations(url).hasConnection()) {
+            if (new RemoteTodoItemCrudOperations(url, contactAccessOperations).hasConnection()) {
                 return url;
             }
         }

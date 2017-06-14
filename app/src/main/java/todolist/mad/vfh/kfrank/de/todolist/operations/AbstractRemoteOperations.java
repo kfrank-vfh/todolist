@@ -19,7 +19,7 @@ import java.util.Arrays;
  * Created by kfrank on 05.06.2017.
  */
 
-public abstract class AbstractRemoteOperations<T> {
+public abstract class AbstractRemoteOperations<T> extends AbstractContactResolverOperations {
 
     private String url;
 
@@ -27,7 +27,8 @@ public abstract class AbstractRemoteOperations<T> {
 
     private JsonFactory jsonFactory;
 
-    public AbstractRemoteOperations(String url) {
+    public AbstractRemoteOperations(String url, IContactAccessOperations contactAccessOperations) {
+        super(contactAccessOperations);
         this.url = url;
         objectMapper = new ObjectMapper();
         jsonFactory = new JsonFactory(objectMapper);

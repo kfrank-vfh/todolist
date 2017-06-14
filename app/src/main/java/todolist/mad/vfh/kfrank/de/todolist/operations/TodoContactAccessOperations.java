@@ -30,7 +30,7 @@ public class TodoContactAccessOperations implements IContactAccessOperations {
         Contact contact = new Contact();
         // get id of contact
         String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-        contact.setId(Long.parseLong(id));
+        contact.setId(id);
         // get name of contact
         String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
         contact.setName(name);
@@ -59,5 +59,10 @@ public class TodoContactAccessOperations implements IContactAccessOperations {
         cursor.close();
         // return contact
         return contact;
+    }
+
+    @Override
+    public Contact getContactToId(String contactId) {
+        return getContactToUri(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactId));
     }
 }

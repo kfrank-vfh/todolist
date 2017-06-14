@@ -11,4 +11,6 @@ import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 public interface IContactAccessOperations {
 
     public Contact getContactToUri(Uri contactUri);
+
+    public Contact getContactToId(String contactId);
 }

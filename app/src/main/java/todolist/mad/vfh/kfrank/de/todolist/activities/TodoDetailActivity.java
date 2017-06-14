@@ -89,6 +89,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         doneView.setChecked(item.isDone());
         favouriteView.setChecked(item.isFavourite());
         contactListAdapter = new ContactListAdapter(this);
+        contactListAdapter.addAll(item.getContacts());
         contactListView.setAdapter(contactListAdapter);
 
         // set listener
@@ -186,7 +187,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (item.equals(getTodoItemFromGUI())) {
-            super.onBackPressed();
+            returnToOverview(NO_OP_CODE);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Todo geändert");
@@ -265,6 +266,9 @@ public class TodoDetailActivity extends AppCompatActivity {
         }
         item.setDone(doneView.isChecked());
         item.setFavourite(favouriteView.isChecked());
+        for (int i = 0; i < contactListAdapter.getCount(); i++) {
+            item.addContact(contactListAdapter.getItem(i));
+        }
         return item;
     }
 }

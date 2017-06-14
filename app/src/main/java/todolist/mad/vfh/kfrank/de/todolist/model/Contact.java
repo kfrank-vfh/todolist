@@ -1,12 +1,14 @@
 package todolist.mad.vfh.kfrank.de.todolist.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Kevin Frank on 13.06.2017.
  */
 
-public class Contact {
+public class Contact implements Serializable {
 
-    private long id;
+    private String id;
 
     private String name;
 
@@ -19,7 +21,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(long id, String name, String phone, String mail, byte[] photo) {
+    public Contact(String id, String name, String phone, String mail, byte[] photo) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -27,11 +29,11 @@ public class Contact {
         this.photo = photo;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -70,7 +72,7 @@ public class Contact {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Contact) {
-            return id == ((Contact) obj).id;
+            return id.equals(((Contact) obj).id);
         }
         return false;
     }
