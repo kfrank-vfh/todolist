@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 import java.io.ByteArrayInputStream;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
@@ -33,6 +35,8 @@ import todolist.mad.vfh.kfrank.de.todolist.operations.ITodoItemCrudOperations;
 
 public class ContactListAdapter extends ArrayAdapter<Contact> {
 
+    private Map<View, Contact> contactsToViews = new HashMap<>();
+
     public ContactListAdapter(@NonNull Context context) {
         super(context, R.layout.todo_list_item);
     }
@@ -40,16 +44,18 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        // get contact
+        Contact contact = getItem(position);
         // inflate new content view if null
         if (convertView == null) {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.contact_list_item, null);
+            contactsToViews.put(convertView, contact);
+            ((Activity) getContext()).registerForContextMenu(convertView);
         }
         // find all views
         final ImageView contactPhotoView = (ImageView) convertView.findViewById(R.id.contactPhoto);
         final TextView contactNameView = (TextView) convertView.findViewById(R.id.contactName);
 
-        // get contact
-        Contact contact = getItem(position);
         // set content of views
         if (contact.getPhoto() != null) {
             ByteArrayInputStream stream = new ByteArrayInputStream(contact.getPhoto());
@@ -59,5 +65,9 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         contactNameView.setText(contact.getName());
         // return content view
         return convertView;
+    }
+
+    public Contact getContactToView(View view) {
+        return contactsToViews.get(view);
     }
 }

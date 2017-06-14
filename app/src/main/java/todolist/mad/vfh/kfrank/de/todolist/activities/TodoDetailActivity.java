@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +57,9 @@ public class TodoDetailActivity extends AppCompatActivity {
     private MenuItem addContactItem;
     private MenuItem saveTodoItem;
     private MenuItem deleteTodoItem;
+
+    // CURRENT SELECTED CONTACT FOR CONTEXT MENU
+    private Contact currentSelectedContact;
 
     // CONTACT ACCESS OPERATIONS
     private IContactAccessOperations contactAccessOperations;
@@ -182,6 +186,40 @@ public class TodoDetailActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        // populate context menu
+        getMenuInflater().inflate(R.menu.todo_details_context_menu, menu);
+        // get all context menu items
+        MenuItem sendSmsItem = menu.findItem(R.id.sendSMS);
+        MenuItem sendMailItem = menu.findItem(R.id.sendMail);
+        MenuItem removeContactItem = menu.findItem(R.id.removeContact);
+        // get contact to view
+        Contact contact = contactListAdapter.getContactToView(v);
+        currentSelectedContact = contact;
+        // set enabled of items depending on contact
+        if (contact == null) {
+            sendSmsItem.setEnabled(false);
+            sendMailItem.setEnabled(false);
+            removeContactItem.setEnabled(false);
+        } else {
+            sendSmsItem.setEnabled(contact.getPhone() != null);
+            sendMailItem.setEnabled(contact.getMail() != null);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.sendSMS) {
+            // TODO send SMS
+        } else if (item.getItemId() == R.id.sendMail) {
+            // TODO send mail
+        } else if (item.getItemId() == R.id.removeContact) {
+            contactListAdapter.remove(currentSelectedContact);
+        }
+        return true;
     }
 
     @Override
