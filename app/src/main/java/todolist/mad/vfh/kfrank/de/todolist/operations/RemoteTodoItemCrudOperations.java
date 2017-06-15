@@ -84,6 +84,7 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(getUrl()).openConnection();
             connection.setRequestMethod("GET");
+            connection.setConnectTimeout(3000);
             connection.getInputStream();
         } catch (Exception e) {
             return false;

@@ -213,9 +213,16 @@ public class TodoDetailActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sendSMS) {
-            // TODO send SMS
+            Uri smsUri = Uri.parse("smsto:" + currentSelectedContact.getPhone());
+            Intent intent = new Intent(Intent.ACTION_SENDTO, smsUri);
+            intent.putExtra("sms_body", this.item.getName() + "\n" + this.item.getDescription());
+            startActivity(intent);
         } else if (item.getItemId() == R.id.sendMail) {
-            // TODO send mail
+            Uri mailUri = Uri.fromParts("mailto", currentSelectedContact.getMail(), null);
+            Intent intent = new Intent(Intent.ACTION_SENDTO, mailUri);
+            intent.putExtra(Intent.EXTRA_SUBJECT, this.item.getName());
+            intent.putExtra(Intent.EXTRA_TEXT, this.item.getDescription());
+            startActivity(Intent.createChooser(intent, "Email senden"));
         } else if (item.getItemId() == R.id.removeContact) {
             contactListAdapter.remove(currentSelectedContact);
         }
