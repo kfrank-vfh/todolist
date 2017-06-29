@@ -76,7 +76,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         ListView contactListView = (ListView) findViewById(R.id.contactList);
 
         // fill views with item data
-        item = (TodoItem) getIntent().getExtras().get("item");
+        item = (TodoItem) getIntent().getExtras().get(Codes.Extra.ITEM);
         nameView.setText(item.getName());
         descriptionView.setText(item.getDescription());
         dueDateView.setText(item.getDueDate() == null ? null : TodoItem.dueDateFormat.format(item.getDueDate()));
@@ -157,16 +157,16 @@ public class TodoDetailActivity extends AppCompatActivity {
             return true;
         } else if (item.equals(deleteTodoItem)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Todo löschen");
-            builder.setMessage("Soll das Todo wirklich gelöscht werden?");
-            builder.setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.todo_detail_delete_alert_title));
+            builder.setMessage(getString(R.string.todo_detail_delete_alert_message));
+            builder.setPositiveButton(getString(R.string.todo_detail_delete_alert_delete_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                     returnToOverview(Codes.Response.DELETE_ITEM_CODE);
                 }
             });
-            builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.todo_detail_delete_alert_cancel_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -203,16 +203,16 @@ public class TodoDetailActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sendSMS) {
-            Uri smsUri = Uri.parse("smsto:" + currentSelectedContact.getPhone());
-            Intent intent = new Intent(Intent.ACTION_SENDTO, smsUri);
-            intent.putExtra("sms_body", this.item.getName() + "\n" + this.item.getDescription());
+            Uri smsUri = Uri.fromParts(Codes.Uri.SMS_TO, currentSelectedContact.getPhone(), null);
+            Intent intent = new Intent(Codes.Action.SEND_TO, smsUri);
+            intent.putExtra(Codes.Extra.SMS_BODY, this.item.getName() + "\n" + this.item.getDescription());
             startActivity(intent);
         } else if (item.getItemId() == R.id.sendMail) {
-            Uri mailUri = Uri.fromParts("mailto", currentSelectedContact.getMail(), null);
-            Intent intent = new Intent(Intent.ACTION_SENDTO, mailUri);
-            intent.putExtra(Intent.EXTRA_SUBJECT, this.item.getName());
-            intent.putExtra(Intent.EXTRA_TEXT, this.item.getDescription());
-            startActivity(Intent.createChooser(intent, "Email senden"));
+            Uri mailUri = Uri.fromParts(Codes.Uri.MAIL_TO, currentSelectedContact.getMail(), null);
+            Intent intent = new Intent(Codes.Action.SEND_TO, mailUri);
+            intent.putExtra(Codes.Extra.MAIL_SUBJECT, this.item.getName());
+            intent.putExtra(Codes.Extra.MAIL_BODY, this.item.getDescription());
+            startActivity(Intent.createChooser(intent, getString(R.string.todo_detail_mail_intent_chooser_title)));
         } else if (item.getItemId() == R.id.removeContact) {
             contactListAdapter.remove(currentSelectedContact);
         }
@@ -225,22 +225,22 @@ public class TodoDetailActivity extends AppCompatActivity {
             returnToOverview(Codes.Response.NO_OP_CODE);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Todo geändert");
-            builder.setMessage("Das Todo wurde geändert. Wie soll mit den Änderungen verfahren werden?");
-            builder.setPositiveButton("Speichern", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.todo_detail_changed_alert_title));
+            builder.setMessage(getString(R.string.todo_detail_changed_alert_message));
+            builder.setPositiveButton(getString(R.string.todo_detail_changed_alert_save_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                     returnToOverview(Codes.Response.SAVE_ITEM_CODE);
                 }
             });
-            builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton(getString(R.string.todo_detail_changed_alert_cancel_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                 }
             });
-            builder.setNegativeButton("Verwerfen", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.todo_detail_changed_alert_discard_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
@@ -252,7 +252,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     }
 
     private void callContactPickerIntent() {
-        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        Intent intent = new Intent(Codes.Action.PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(intent, Codes.Request.PICK_CONTACT_CODE);
     }
 
@@ -269,7 +269,7 @@ public class TodoDetailActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Object result) {
                     Contact contact = (Contact) result;
-                    if (contactListAdapter.getPosition(contact) < 0) {
+                    if (!contactListAdapter.hasContact(contact)) {
                         contactListAdapter.add(contact);
                     }
                 }
@@ -281,7 +281,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         Intent intent = new Intent();
         if (Arrays.asList(Codes.Response.SAVE_ITEM_CODE, Codes.Response.DELETE_ITEM_CODE).contains(responseCode)) {
             item.adoptData(getTodoItemFromGUI());
-            intent.putExtra("item", item);
+            intent.putExtra(Codes.Extra.ITEM, item);
         }
         setResult(responseCode, intent);
         finish();

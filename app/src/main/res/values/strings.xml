@@ -42,4 +42,19 @@
     <string name="login_activity_check_login_title">Bitten warten Sie...</string>
     <string name="login_activity_check_login_message">Nutzerdaten werden evaluiert.</string>
 
+    <string name="todo_overview_on_back">"Nochmaliges Drücken beendet die App!"</string>
+
+    <string name="todo_detail_delete_alert_title">Todo löschen</string>
+    <string name="todo_detail_delete_alert_message">Soll das Todo wirklich gelöscht werden?</string>
+    <string name="todo_detail_delete_alert_delete_button">Löschen</string>
+    <string name="todo_detail_delete_alert_cancel_button">Abbrechen</string>
+    <string name="todo_detail_mail_intent_chooser_title">Email senden</string>
+    <string name="todo_detail_changed_alert_title">Todo geändert</string>
+    <string name="todo_detail_changed_alert_message">Das Todo wurde geändert. Wie soll mit den Änderungen verfahren werden?</string>
+    <string name="todo_detail_changed_alert_save_button">Speichern</string>
+    <string name="todo_detail_changed_alert_cancel_button">Abbrechen</string>
+    <string name="todo_detail_changed_alert_discard_button">Verwerfen</string>
+
+
+
 </resources>

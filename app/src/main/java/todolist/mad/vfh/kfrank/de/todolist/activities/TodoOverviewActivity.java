@@ -90,7 +90,7 @@ public class TodoOverviewActivity extends AppCompatActivity {
 
     private void showDetailViewToItem(TodoItem item, int requestCode) {
         Intent intent = new Intent(this, TodoDetailActivity.class);
-        intent.putExtra("item", item);
+        intent.putExtra(Codes.Extra.ITEM, item);
         startActivityForResult(intent, requestCode);
     }
 
@@ -99,7 +99,7 @@ public class TodoOverviewActivity extends AppCompatActivity {
         if (resultCode == Codes.Response.NO_OP_CODE) {
             return;
         }
-        TodoItem item = (TodoItem) data.getExtras().get("item");
+        TodoItem item = (TodoItem) data.getExtras().get(Codes.Extra.ITEM);
         if (resultCode == Codes.Response.SAVE_ITEM_CODE) {
             if (requestCode == Codes.Request.NEW_ITEM_CODE) {
                 adapter.add(item);
@@ -116,7 +116,7 @@ public class TodoOverviewActivity extends AppCompatActivity {
         if (backAlreadyPressed) {
             finish();
         } else {
-            Toast.makeText(this, "Nochmaliges Drücken beendet die App!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.todo_overview_on_back), Toast.LENGTH_SHORT).show();
             backAlreadyPressed = true;
         }
     }

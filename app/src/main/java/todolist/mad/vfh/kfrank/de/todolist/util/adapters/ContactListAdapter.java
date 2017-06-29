@@ -56,6 +56,10 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
         return convertView;
     }
 
+    public boolean hasContact(Contact contact) {
+        return getPosition(contact) >= 0;
+    }
+
     public Contact getContactToView(View view) {
         return contactsToViews.get(view);
     }
