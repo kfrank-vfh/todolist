@@ -33,18 +33,11 @@ import todolist.mad.vfh.kfrank.de.todolist.TodoListApplication;
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 import todolist.mad.vfh.kfrank.de.todolist.operations.IContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.util.Codes;
 import todolist.mad.vfh.kfrank.de.todolist.util.ContactListAdapter;
 import todolist.mad.vfh.kfrank.de.todolist.util.EmptyAsyncTask;
 
 public class TodoDetailActivity extends AppCompatActivity {
-
-    // RESPONSE CODES
-    public static final int SAVE_ITEM_CODE = 1;
-    public static final int DELETE_ITEM_CODE = 2;
-    public static final int NO_OP_CODE = 3;
-
-    // REQUEST CODES
-    public static final int PICK_CONTACT_CODE = 4;
 
     // VIEWS
     private EditText nameView;
@@ -163,7 +156,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         if (item.equals(addContactItem)) {
             callContactPickerIntent();
         } else if (item.equals(saveTodoItem)) {
-            returnToOverview(SAVE_ITEM_CODE);
+            returnToOverview(Codes.Response.SAVE_ITEM_CODE);
             return true;
         } else if (item.equals(deleteTodoItem)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -173,7 +166,7 @@ public class TodoDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    returnToOverview(DELETE_ITEM_CODE);
+                    returnToOverview(Codes.Response.DELETE_ITEM_CODE);
                 }
             });
             builder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -232,7 +225,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (item.equals(getTodoItemFromGUI())) {
-            returnToOverview(NO_OP_CODE);
+            returnToOverview(Codes.Response.NO_OP_CODE);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Todo geändert");
@@ -241,7 +234,7 @@ public class TodoDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    returnToOverview(SAVE_ITEM_CODE);
+                    returnToOverview(Codes.Response.SAVE_ITEM_CODE);
                 }
             });
             builder.setNeutralButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -254,7 +247,7 @@ public class TodoDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    returnToOverview(NO_OP_CODE);
+                    returnToOverview(Codes.Response.NO_OP_CODE);
                 }
             });
             builder.create().show();
@@ -263,12 +256,12 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     private void callContactPickerIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        startActivityForResult(intent, PICK_CONTACT_CODE);
+        startActivityForResult(intent, Codes.Request.PICK_CONTACT_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_CONTACT_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Codes.Request.PICK_CONTACT_CODE && resultCode == Activity.RESULT_OK) {
             final Uri contactUri = data.getData();
             new EmptyAsyncTask() {
                 @Override
@@ -289,7 +282,7 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     private void returnToOverview(int responseCode) {
         Intent intent = new Intent();
-        if (Arrays.asList(SAVE_ITEM_CODE, DELETE_ITEM_CODE).contains(responseCode)) {
+        if (Arrays.asList(Codes.Response.SAVE_ITEM_CODE, Codes.Response.DELETE_ITEM_CODE).contains(responseCode)) {
             item.adoptData(getTodoItemFromGUI());
             intent.putExtra("item", item);
         }

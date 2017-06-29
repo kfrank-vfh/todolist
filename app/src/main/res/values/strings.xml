@@ -35,4 +35,11 @@
     <string name="todo_overview_options_menu_favouriteSorting_title">Sort By Favourite</string>
     <string name="todo_overview_options_menu_dateSorting_title">Sort By Date</string>
 
+    <string name="login_activity_connection_check_title">Verbindung wird geprüft</string>
+    <string name="login_activity_connection_check_message">Bitte warten während die Verbindung zum Webserver geprüft wird.</string>
+    <string name="login_activity_no_connection_title">Keine Verbindung vorhanden</string>
+    <string name="login_activity_no_connection_message">Es ist keine Verbindung zum Webserver vorhanden. Alle Daten werden nur lokal gespeichert!</string>
+    <string name="login_activity_check_login_title">Bitten warten Sie...</string>
+    <string name="login_activity_check_login_message">Nutzerdaten werden evaluiert.</string>
+
 </resources>

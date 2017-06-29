@@ -15,17 +15,12 @@ import java.util.Comparator;
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.TodoListApplication;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
+import todolist.mad.vfh.kfrank.de.todolist.util.Codes;
+import todolist.mad.vfh.kfrank.de.todolist.util.DateComparator;
+import todolist.mad.vfh.kfrank.de.todolist.util.FavouriteComparator;
 import todolist.mad.vfh.kfrank.de.todolist.util.TodoListAdapter;
 
 public class TodoOverviewActivity extends AppCompatActivity {
-
-    // REQUEST CODES
-    private static final int NEW_ITEM_CODE = 1;
-    private static final int UPDATE_ITEM_CODE = 2;
-
-    // COMPARATORS
-    private static final Comparator<TodoItem> FAVOURITE_COMPARATOR = getFavouriteComparator();
-    private static final Comparator<TodoItem> DATE_COMPARATOR = getDateComparator();
 
     // FLAGS
     private boolean backAlreadyPressed = false;
@@ -56,12 +51,12 @@ public class TodoOverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TodoItem item = adapter.getItem(position);
-                showDetailViewToItem(item, UPDATE_ITEM_CODE);
+                showDetailViewToItem(item, Codes.Request.UPDATE_ITEM_CODE);
             }
         });
 
         // initiiere den Comparator
-        setComparator(FAVOURITE_COMPARATOR);
+        setComparator(FavouriteComparator.getInstance());
     }
 
     @Override
@@ -73,8 +68,8 @@ public class TodoOverviewActivity extends AppCompatActivity {
         favouriteSortingItem = menu.findItem(R.id.favouriteSorting);
         dateSortingItem = menu.findItem(R.id.dateSorting);
         // set correct icons
-        favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
-        dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
+        favouriteSortingItem.setIcon(FavouriteComparator.getInstance().equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
+        dateSortingItem.setIcon(DateComparator.getInstance().equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
 
         return true;
     }
@@ -82,13 +77,13 @@ public class TodoOverviewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(addTodoItem)) {
-            showDetailViewToItem(new TodoItem(), NEW_ITEM_CODE);
+            showDetailViewToItem(new TodoItem(), Codes.Request.NEW_ITEM_CODE);
             return true;
         } else if (item.equals(favouriteSortingItem)) {
-            setComparator(FAVOURITE_COMPARATOR);
+            setComparator(FavouriteComparator.getInstance());
             return true;
         } else if (item.equals(dateSortingItem)) {
-            setComparator(DATE_COMPARATOR);
+            setComparator(DateComparator.getInstance());
             return true;
         }
         return false;
@@ -102,17 +97,17 @@ public class TodoOverviewActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == TodoDetailActivity.NO_OP_CODE) {
+        if (resultCode == Codes.Response.NO_OP_CODE) {
             return;
         }
         TodoItem item = (TodoItem) data.getExtras().get("item");
-        if (resultCode == TodoDetailActivity.SAVE_ITEM_CODE) {
-            if (requestCode == NEW_ITEM_CODE) {
+        if (resultCode == Codes.Response.SAVE_ITEM_CODE) {
+            if (requestCode == Codes.Request.NEW_ITEM_CODE) {
                 adapter.add(item);
-            } else if (requestCode == UPDATE_ITEM_CODE) {
+            } else if (requestCode == Codes.Request.UPDATE_ITEM_CODE) {
                 adapter.itemChanged(item);
             }
-        } else if (resultCode == TodoDetailActivity.DELETE_ITEM_CODE) {
+        } else if (resultCode == Codes.Response.DELETE_ITEM_CODE) {
             adapter.remove(item);
         }
     }
@@ -139,41 +134,11 @@ public class TodoOverviewActivity extends AppCompatActivity {
         }
         currentComparator = comparator;
         if (favouriteSortingItem != null) {
-            favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
+            favouriteSortingItem.setIcon(FavouriteComparator.getInstance().equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
         }
         if (dateSortingItem != null) {
-            dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
+            dateSortingItem.setIcon(DateComparator.getInstance().equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
         }
         adapter.setComparator(comparator);
-    }
-
-    private static Comparator<TodoItem> getFavouriteComparator() {
-        return new Comparator<TodoItem>() {
-            @Override
-            public int compare(TodoItem o1, TodoItem o2) {
-                if (o1.isDone() == o2.isDone()) {
-                    if (o1.isFavourite() == o2.isFavourite()) {
-                        return (o1.getDueDate() == null || o2.getDueDate() == null) ? 0 : (int) (o1.getDueDate().getTime() - o2.getDueDate().getTime());
-                    }
-                    return o1.isFavourite() ? -1 : 1;
-                }
-                return o1.isDone() ? 1 : -1;
-            }
-        };
-    }
-
-    private static Comparator<TodoItem> getDateComparator() {
-        return new Comparator<TodoItem>() {
-            @Override
-            public int compare(TodoItem o1, TodoItem o2) {
-                if (o1.isDone() == o2.isDone()) {
-                    if (o1.getDueDate() == null || o2.getDueDate() == null || o1.getDueDate().getTime() - o2.getDueDate().getTime() == 0) {
-                        return o1.isFavourite() ? -1 : 1;
-                    }
-                    return (int) (o1.getDueDate().getTime() - o2.getDueDate().getTime());
-                }
-                return o1.isDone() ? 1 : -1;
-            }
-        };
     }
 }

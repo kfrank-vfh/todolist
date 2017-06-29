@@ -47,6 +47,8 @@ public class LoginActivity extends Activity {
         // init activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        // hide login page till connection to webserver found
         all = findViewById(R.id.loginActivityLayout);
         all.setVisibility(View.INVISIBLE);
 
@@ -61,8 +63,7 @@ public class LoginActivity extends Activity {
         signinButton = (Button) findViewById(R.id.email_sign_in_button);
         loginFailedView = (TextView) findViewById(R.id.loginFailedMessage);
 
-
-        // Listener um zur ListView zu kommen
+        // listener for handling the login
         passwordField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -83,8 +84,8 @@ public class LoginActivity extends Activity {
             }
         });
 
-        // Handler zur Evaluation des Inputs
-        emailField.setText("s@bht.de"); // TODO rausnehmen
+        // handler for email und password evaluation
+        //emailField.setText("s@bht.de"); // TODO remove comment marks for quicker login
         emailField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -94,7 +95,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        passwordField.setText("000000"); // TODO rausnehmen
+        //passwordField.setText("000000"); // TODO remove comment marks for quicker login
         passwordField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -104,8 +105,13 @@ public class LoginActivity extends Activity {
             }
         });
 
+        // validate email + password and update sigin button for correct state
+        validateEmail();
+        validatePassword();
+        updateSigninButton();
+
         // finally trigger async connection check on application
-        new AsyncProgressDialogTask<Object, Object, Boolean>(this, "Verbindung wird geprüft", "Bitte warten während die Verbindung zum Webserver geprüft wird.") {
+        new AsyncProgressDialogTask<Object, Object, Boolean>(this, getString(R.string.login_activity_connection_check_title), getString(R.string.login_activity_connection_check_message)) {
 
             @Override
             protected Boolean doInBackground(Object... params) {
@@ -122,10 +128,6 @@ public class LoginActivity extends Activity {
                 }
             }
         };
-
-        validateEmail();
-        validatePassword();
-        updateSigninButton();
     }
 
     private void validateEmail() {
@@ -146,8 +148,8 @@ public class LoginActivity extends Activity {
 
     private void showNoConnectionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Keine Verbindung vorhanden");
-        builder.setMessage("Es ist keine Verbindung zum Webserver vorhanden. Alle Daten werden nur lokal gespeichert!");
+        builder.setTitle(getString(R.string.login_activity_no_connection_title));
+        builder.setMessage(getString(R.string.login_activity_no_connection_message));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -159,7 +161,7 @@ public class LoginActivity extends Activity {
     }
 
     private void checkLogin() {
-        new AsyncProgressDialogTask<Object, Object, Object>(LoginActivity.this, "Bitten warten Sie...", "Nutzerdaten werden evaluiert.") {
+        new AsyncProgressDialogTask<Object, Object, Object>(LoginActivity.this, getString(R.string.login_activity_check_login_title), getString(R.string.login_activity_check_login_message)) {
 
             private User user;
 

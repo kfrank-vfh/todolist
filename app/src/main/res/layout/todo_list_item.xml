@@ -43,8 +43,8 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:scaleX="@dimen/todo_list_item_checkbox_scale"
-        android:scaleY="@dimen/todo_list_item_checkbox_scale"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         android:layout_marginRight="@dimen/todo_list_item_margin"/>
 
 </LinearLayout>
