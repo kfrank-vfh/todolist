@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.util;
+package todolist.mad.vfh.kfrank.de.todolist.util.widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;

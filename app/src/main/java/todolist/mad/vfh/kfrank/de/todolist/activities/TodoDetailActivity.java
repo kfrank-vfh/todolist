@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,10 +30,9 @@ import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.TodoListApplication;
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.operations.IContactAccessOperations;
-import todolist.mad.vfh.kfrank.de.todolist.util.Codes;
-import todolist.mad.vfh.kfrank.de.todolist.util.ContactListAdapter;
-import todolist.mad.vfh.kfrank.de.todolist.util.EmptyAsyncTask;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.util.adapters.ContactListAdapter;
+import todolist.mad.vfh.kfrank.de.todolist.util.reductions.EmptyAsyncTask;
 
 public class TodoDetailActivity extends AppCompatActivity {
 

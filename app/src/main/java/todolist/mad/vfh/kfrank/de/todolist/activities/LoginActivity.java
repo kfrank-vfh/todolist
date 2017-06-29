@@ -16,8 +16,8 @@ import android.widget.TextView;
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.TodoListApplication;
 import todolist.mad.vfh.kfrank.de.todolist.model.User;
-import todolist.mad.vfh.kfrank.de.todolist.util.AbstractTextWatcher;
-import todolist.mad.vfh.kfrank.de.todolist.util.AsyncProgressDialogTask;
+import todolist.mad.vfh.kfrank.de.todolist.util.reductions.AbstractTextWatcher;
+import todolist.mad.vfh.kfrank.de.todolist.util.reductions.AsyncProgressDialogTask;
 
 public class LoginActivity extends Activity {
 

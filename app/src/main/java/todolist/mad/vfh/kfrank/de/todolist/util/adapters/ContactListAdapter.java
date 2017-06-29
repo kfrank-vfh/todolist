@@ -1,33 +1,22 @@
-package todolist.mad.vfh.kfrank.de.todolist.util;
+package todolist.mad.vfh.kfrank.de.todolist.util.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayInputStream;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
-import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.operations.ITodoItemCrudOperations;
 
 /**
  * Created by Kevin Frank on 03.06.2017.

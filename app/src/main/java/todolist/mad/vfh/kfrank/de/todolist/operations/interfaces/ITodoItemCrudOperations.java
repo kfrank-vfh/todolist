@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.interfaces;
 
 import java.util.List;
 

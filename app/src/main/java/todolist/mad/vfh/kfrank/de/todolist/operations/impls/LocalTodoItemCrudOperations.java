@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.impls;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
+import todolist.mad.vfh.kfrank.de.todolist.operations.abstracts.AbstractContactResolverOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOperations;
 
 public class LocalTodoItemCrudOperations extends AbstractContactResolverOperations implements ITodoItemCrudOperations {
 

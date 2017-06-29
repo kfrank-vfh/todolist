@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.impls;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
@@ -14,6 +14,9 @@ import java.util.List;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
+import todolist.mad.vfh.kfrank.de.todolist.operations.abstracts.AbstractRemoteOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOperations;
 
 public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoItem> implements ITodoItemCrudOperations {
 

@@ -9,14 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.operations.DelegateTodoItemCrudOperationsImpl;
-import todolist.mad.vfh.kfrank.de.todolist.operations.IAuthenticationOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.IContactAccessOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.RemoteAuthenticationOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.RemoteTodoItemCrudOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.ITodoItemCrudOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.LocalTodoItemCrudOperations;
-import todolist.mad.vfh.kfrank.de.todolist.operations.TodoContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.DelegateTodoItemCrudOperationsImpl;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IAuthenticationOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.RemoteAuthenticationOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.RemoteTodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.LocalTodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.TodoContactAccessOperations;
 
 /**
  * Created by kfrank on 04.06.2017.

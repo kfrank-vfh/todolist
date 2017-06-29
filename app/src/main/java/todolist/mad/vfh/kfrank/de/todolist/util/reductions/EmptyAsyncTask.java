@@ -1,7 +1,5 @@
-package todolist.mad.vfh.kfrank.de.todolist.util;
+package todolist.mad.vfh.kfrank.de.todolist.util.reductions;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 
 /**

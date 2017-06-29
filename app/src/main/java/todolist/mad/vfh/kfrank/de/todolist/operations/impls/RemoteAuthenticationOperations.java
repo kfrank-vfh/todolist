@@ -1,12 +1,12 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.impls;
 
-import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.User;
+import todolist.mad.vfh.kfrank.de.todolist.operations.abstracts.AbstractRemoteOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IAuthenticationOperations;
 
 /**
  * Created by kfrank on 05.06.2017.

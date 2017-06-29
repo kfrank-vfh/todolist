@@ -1,12 +1,12 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.impls;
 
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.Contact;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
 
 /**
  * Created by Kevin Frank on 13.06.2017.

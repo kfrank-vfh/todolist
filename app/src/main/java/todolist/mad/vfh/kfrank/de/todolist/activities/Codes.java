@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.util;
+package todolist.mad.vfh.kfrank.de.todolist.activities;
 
 /**
  * Created by Kevin Frank on 29.06.2017.

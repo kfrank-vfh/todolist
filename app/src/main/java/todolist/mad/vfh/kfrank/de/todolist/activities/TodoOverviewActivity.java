@@ -15,10 +15,9 @@ import java.util.Comparator;
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.TodoListApplication;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.util.Codes;
-import todolist.mad.vfh.kfrank.de.todolist.util.DateComparator;
-import todolist.mad.vfh.kfrank.de.todolist.util.FavouriteComparator;
-import todolist.mad.vfh.kfrank.de.todolist.util.TodoListAdapter;
+import todolist.mad.vfh.kfrank.de.todolist.util.comparators.DateComparator;
+import todolist.mad.vfh.kfrank.de.todolist.util.comparators.FavouriteComparator;
+import todolist.mad.vfh.kfrank.de.todolist.util.adapters.TodoListAdapter;
 
 public class TodoOverviewActivity extends AppCompatActivity {
 

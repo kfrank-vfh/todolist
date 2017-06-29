@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.abstracts;
 
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonFactory;
@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
 
 /**
  * Created by kfrank on 05.06.2017.

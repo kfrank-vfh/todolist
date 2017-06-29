@@ -1,8 +1,9 @@
-package todolist.mad.vfh.kfrank.de.todolist.operations;
+package todolist.mad.vfh.kfrank.de.todolist.operations.impls;
 
 import java.util.List;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOperations;
 
 /**
  * Created by kfrank on 04.06.2017.

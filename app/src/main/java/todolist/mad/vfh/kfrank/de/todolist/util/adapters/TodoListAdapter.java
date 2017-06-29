@@ -1,4 +1,4 @@
-package todolist.mad.vfh.kfrank.de.todolist.util;
+package todolist.mad.vfh.kfrank.de.todolist.util.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +17,8 @@ import java.util.Date;
 
 import todolist.mad.vfh.kfrank.de.todolist.R;
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.operations.ITodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOperations;
+import todolist.mad.vfh.kfrank.de.todolist.util.reductions.EmptyAsyncTask;
 
 /**
  * Created by Kevin Frank on 06.06.2017.

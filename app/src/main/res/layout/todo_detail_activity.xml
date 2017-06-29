@@ -77,12 +77,12 @@
             android:layout_height="wrap_content"
             android:text="@string/todo_detail_contacts_label"/>
 
-        <todolist.mad.vfh.kfrank.de.todolist.util.ContactListView
+        <todolist.mad.vfh.kfrank.de.todolist.util.widgets.ContactListView
             android:id="@+id/contactList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </todolist.mad.vfh.kfrank.de.todolist.util.ContactListView>
+        </todolist.mad.vfh.kfrank.de.todolist.util.widgets.ContactListView>
 
     </LinearLayout>
 
