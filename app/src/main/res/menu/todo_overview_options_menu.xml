@@ -5,21 +5,21 @@
         android:id="@+id/addTodo"
         android:orderInCategory="1"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_add_black_24dp"
+        android:icon="@drawable/plus_icon"
         android:title="Add Todo" />
 
     <item
         android:id="@+id/favouriteSorting"
         android:orderInCategory="2"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_grade_black_24dp"
+        android:icon="@drawable/favourite_icon"
         android:title="Sort By Favourite" />
 
     <item
         android:id="@+id/dateSorting"
         android:orderInCategory="3"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_date_range_black_24dp"
+        android:icon="@drawable/calendar_icon"
         android:title="Sort By Date" />
 
 </menu>

@@ -5,21 +5,21 @@
         android:id="@+id/addContact"
         android:orderInCategory="1"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_person_add_black_24dp"
+        android:icon="@drawable/add_person_icon"
         android:title="Add Contact" />
 
     <item
         android:id="@+id/saveTodo"
         android:orderInCategory="2"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_save_black_24dp"
+        android:icon="@drawable/save_icon"
         android:title="Save Todo" />
 
     <item
         android:id="@+id/deleteTodo"
         android:orderInCategory="3"
         todolist:showAsAction="always"
-        android:icon="@drawable/ic_delete_forever_black_24dp"
+        android:icon="@drawable/delete_icon"
         android:title="Delete Todo" />
 
 </menu>

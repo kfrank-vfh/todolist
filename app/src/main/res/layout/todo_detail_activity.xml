@@ -47,7 +47,7 @@
             android:hint="Fälligkeitsdatum"
             android:focusable="false"
             android:enabled="true"
-            android:drawableLeft="@drawable/ic_date_range_black_24dp"/>
+            android:drawableLeft="@drawable/calendar_icon"/>
 
         <Switch
             android:id="@+id/done"

@@ -73,8 +73,8 @@ public class TodoOverviewActivity extends AppCompatActivity {
         favouriteSortingItem = menu.findItem(R.id.favouriteSorting);
         dateSortingItem = menu.findItem(R.id.dateSorting);
         // set correct icons
-        favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_grade_black_24dp_checked : R.drawable.ic_grade_black_24dp);
-        dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_date_range_black_24dp_checked : R.drawable.ic_date_range_black_24dp);
+        favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
+        dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
 
         return true;
     }
@@ -139,10 +139,10 @@ public class TodoOverviewActivity extends AppCompatActivity {
         }
         currentComparator = comparator;
         if (favouriteSortingItem != null) {
-            favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_grade_black_24dp_checked : R.drawable.ic_grade_black_24dp);
+            favouriteSortingItem.setIcon(FAVOURITE_COMPARATOR.equals(currentComparator) ? R.drawable.favourite_checked_icon : R.drawable.favourite_icon);
         }
         if (dateSortingItem != null) {
-            dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.ic_date_range_black_24dp_checked : R.drawable.ic_date_range_black_24dp);
+            dateSortingItem.setIcon(DATE_COMPARATOR.equals(currentComparator) ? R.drawable.calendar_checked_icon : R.drawable.calendar_icon);
         }
         adapter.setComparator(comparator);
     }
