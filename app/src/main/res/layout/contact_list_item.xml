@@ -9,18 +9,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/person_icon"
-        android:minWidth="39dp"
-        android:maxWidth="39dp"
-        android:minHeight="39dp"
-        android:maxHeight="39dp"/>
+        android:minWidth="@dimen/contact_list_item_icon_width"
+        android:maxWidth="@dimen/contact_list_item_icon_width"
+        android:minHeight="@dimen/contact_list_item_icon_height"
+        android:maxHeight="@dimen/contact_list_item_icon_height"/>
 
     <TextView
         android:id="@+id/contactName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Contact Name"
-        android:textSize="24dp"
+        android:textSize="@dimen/contact_list_item_text_size"
         android:textColor="@color/black"
-        android:padding="5dp"/>
+        android:padding="@dimen/contact_list_item_padding"/>
 
 </LinearLayout>

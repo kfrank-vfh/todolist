@@ -54,11 +54,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Todo Erledigt?  "
-            android:textSize="20dp"
+            android:textSize="@dimen/todo_detail_text_size"
             android:textAlignment="textEnd"
             android:layout_gravity="end"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="@dimen/todo_detail_padding"
+            android:paddingBottom="@dimen/todo_detail_padding"/>
 
         <!-- TODO durch TextView mit Stern Image ersetzen -->
         <Switch
@@ -66,11 +66,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Favorit?  "
-            android:textSize="20dp"
+            android:textSize="@dimen/todo_detail_text_size"
             android:textAlignment="textEnd"
             android:layout_gravity="end"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingTop="@dimen/todo_detail_padding"
+            android:paddingBottom="@dimen/todo_detail_padding"/>
 
         <TextView
             android:layout_width="match_parent"
