@@ -16,7 +16,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Todo Item Name"
+            android:text="@string/todo_list_item_default_name"
             android:textSize="@dimen/todo_list_item_text_size"
             android:textColor="@color/black"/>
 
@@ -24,7 +24,7 @@
             android:id="@+id/dueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fälligkeitsdatum" />
+            android:text="@string/todo_list_item_default_due_date" />
 
     </LinearLayout>
 

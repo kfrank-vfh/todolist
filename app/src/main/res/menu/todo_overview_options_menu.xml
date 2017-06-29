@@ -6,20 +6,20 @@
         android:orderInCategory="1"
         todolist:showAsAction="always"
         android:icon="@drawable/plus_icon"
-        android:title="Add Todo" />
+        android:title="@string/todo_overview_options_menu_addTodo_title" />
 
     <item
         android:id="@+id/favouriteSorting"
         android:orderInCategory="2"
         todolist:showAsAction="always"
         android:icon="@drawable/favourite_icon"
-        android:title="Sort By Favourite" />
+        android:title="@string/todo_overview_options_menu_favouriteSorting_title" />
 
     <item
         android:id="@+id/dateSorting"
         android:orderInCategory="3"
         todolist:showAsAction="always"
         android:icon="@drawable/calendar_icon"
-        android:title="Sort By Date" />
+        android:title="@string/todo_overview_options_menu_dateSorting_title" />
 
 </menu>

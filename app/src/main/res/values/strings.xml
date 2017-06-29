@@ -10,4 +10,29 @@
     <string name="error_login_failed">Die Anmeldedaten sind nicht korrekt!</string>
     <string name="title_activity_login">TodoList</string>
 
+    <string name="todo_detail_name_label">Name</string>
+    <string name="todo_detail_name_hint">Todo</string>
+    <string name="todo_detail_description_label">Beschreibung</string>
+    <string name="todo_detail_description_hint">Beschreibung des Todos</string>
+    <string name="todo_detail_due_date_label">Fällig am</string>
+    <string name="todo_detail_due_date_hint">Fälligkeitsdatum</string>
+    <string name="todo_detail_done_label">Todo Erledigt?  </string>
+    <string name="todo_detail_favourite_label">Favorit?  </string>
+    <string name="todo_detail_contacts_label">Kontakte</string>
+
+    <string name="todo_list_item_default_name">Todo Item Name</string>
+    <string name="todo_list_item_default_due_date">Fälligkeitsdatum</string>
+
+    <string name="todo_details_context_menu_sendSMS_title">SMS senden</string>
+    <string name="todo_details_context_menu_sendMail_title">Email senden</string>
+    <string name="todo_details_context_menu_removeContact_title">Kontakt entfernen</string>
+
+    <string name="todo_details_options_menu_addContact_title">Add Contact</string>
+    <string name="todo_details_options_menu_saveTodo_title">Save Todo</string>
+    <string name="todo_details_options_menu_deleteTodo_title">Delete Todo</string>
+
+    <string name="todo_overview_options_menu_addTodo_title">Add Todo</string>
+    <string name="todo_overview_options_menu_favouriteSorting_title">Sort By Favourite</string>
+    <string name="todo_overview_options_menu_dateSorting_title">Sort By Date</string>
+
 </resources>

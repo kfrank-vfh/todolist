@@ -4,16 +4,16 @@
     <item
         android:id="@+id/sendSMS"
         android:orderInCategory="1"
-        android:title="SMS senden" />
+        android:title="@string/todo_details_context_menu_sendSMS_title" />
 
     <item
         android:id="@+id/sendMail"
         android:orderInCategory="2"
-        android:title="Email senden" />
+        android:title="@string/todo_details_context_menu_sendMail_title" />
 
     <item
         android:id="@+id/removeContact"
         android:orderInCategory="3"
-        android:title="Kontakt entfernen" />
+        android:title="@string/todo_details_context_menu_removeContact_title" />
 
 </menu>
