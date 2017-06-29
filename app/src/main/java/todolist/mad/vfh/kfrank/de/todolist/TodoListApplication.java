@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
-import todolist.mad.vfh.kfrank.de.todolist.operations.impls.DelegateTodoItemCrudOperationsImpl;
+import todolist.mad.vfh.kfrank.de.todolist.operations.impls.DelegateTodoItemCrudOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IAuthenticationOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
 import todolist.mad.vfh.kfrank.de.todolist.operations.impls.RemoteAuthenticationOperations;
@@ -24,7 +24,7 @@ import todolist.mad.vfh.kfrank.de.todolist.operations.impls.TodoContactAccessOpe
 
 public class TodoListApplication extends Application {
 
-    private DelegateTodoItemCrudOperationsImpl todoItemCrudOperations;
+    private DelegateTodoItemCrudOperations todoItemCrudOperations;
 
     private IAuthenticationOperations authenticationOperations;
 
@@ -36,7 +36,7 @@ public class TodoListApplication extends Application {
         // assemble crud access
         contactAccessOperations = new TodoContactAccessOperations(getContentResolver());
         LocalTodoItemCrudOperations localTodoItemCrudOperations = new LocalTodoItemCrudOperations(this, contactAccessOperations);
-        todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(null, localTodoItemCrudOperations);
+        todoItemCrudOperations = new DelegateTodoItemCrudOperations(null, localTodoItemCrudOperations);
     }
 
     public boolean checkForRemoteConnection() {
@@ -45,15 +45,15 @@ public class TodoListApplication extends Application {
         if (hasConnection) {
             LocalTodoItemCrudOperations localTodoItemCrudOperations = todoItemCrudOperations.getLocalTodoItemCrudOperations();
             RemoteTodoItemCrudOperations remoteTodoItemCrudOperations = new RemoteTodoItemCrudOperations(remoteAddress, contactAccessOperations);
-            todoItemCrudOperations = new DelegateTodoItemCrudOperationsImpl(remoteTodoItemCrudOperations, localTodoItemCrudOperations);
+            todoItemCrudOperations = new DelegateTodoItemCrudOperations(remoteTodoItemCrudOperations, localTodoItemCrudOperations);
             authenticationOperations = new RemoteAuthenticationOperations(remoteAddress);
         }
-        replaceWithRandomItems();
+        // replaceWithRandomItems(); // TODO remove comment marks for random generated todo items
         return hasConnection;
     }
 
     public String getWorkingRemoteAddress() {
-        for (String url : Arrays.asList("http://192.168.2.101:8080/api")) {
+        for (String url : Arrays.asList("http://192.168.2.101:8080/api")) { // TODO ggfs. URLs hinzufügen, wenn diese nicht funktioniert
             if (new RemoteTodoItemCrudOperations(url, contactAccessOperations).hasConnection()) {
                 return url;
             }
@@ -80,7 +80,7 @@ public class TodoListApplication extends Application {
             todoItemCrudOperations.deleteTodoItem(item.getId());
         }
         // then add random items
-        for (TodoItem item : generateTodoItems(10)) {
+        for (TodoItem item : generateTodoItems(10)) { // TODO adjust number for more / less random items
             todoItemCrudOperations.createTodoItem(item);
         }
     }

@@ -114,6 +114,7 @@ public class TodoOverviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (backAlreadyPressed) {
+            ((TodoListApplication) getApplication()).getTodoItemCrudOperations().finalise();
             finish();
         } else {
             Toast.makeText(this, getString(R.string.todo_overview_on_back), Toast.LENGTH_SHORT).show();

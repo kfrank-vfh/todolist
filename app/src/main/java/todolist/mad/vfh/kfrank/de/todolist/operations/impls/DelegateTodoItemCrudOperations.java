@@ -9,13 +9,13 @@ import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOp
  * Created by kfrank on 04.06.2017.
  */
 
-public class DelegateTodoItemCrudOperationsImpl implements ITodoItemCrudOperations {
+public class DelegateTodoItemCrudOperations implements ITodoItemCrudOperations {
 
     private RemoteTodoItemCrudOperations remoteTodoItemCrudOperations;
 
     private LocalTodoItemCrudOperations localTodoItemCrudOperations;
 
-    public DelegateTodoItemCrudOperationsImpl(RemoteTodoItemCrudOperations remoteTodoItemCrudOperations, LocalTodoItemCrudOperations localTodoItemCrudOperations) {
+    public DelegateTodoItemCrudOperations(RemoteTodoItemCrudOperations remoteTodoItemCrudOperations, LocalTodoItemCrudOperations localTodoItemCrudOperations) {
         this.remoteTodoItemCrudOperations = remoteTodoItemCrudOperations;
         this.localTodoItemCrudOperations = localTodoItemCrudOperations;
         // TodoItems von Datenbank und Webserver abgleichen
@@ -91,5 +91,13 @@ public class DelegateTodoItemCrudOperationsImpl implements ITodoItemCrudOperatio
             result &= remoteTodoItemCrudOperations.deleteTodoItem(todoItemId);
         }
         return result;
+    }
+
+    @Override
+    public void finalise() {
+        localTodoItemCrudOperations.finalise();
+        if (remoteTodoItemCrudOperations != null) {
+            remoteTodoItemCrudOperations.finalise();
+        }
     }
 }

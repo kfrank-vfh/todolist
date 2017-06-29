@@ -19,4 +19,6 @@ public interface ITodoItemCrudOperations {
     public TodoItem updateTodoItem(TodoItem item);
 
     public boolean deleteTodoItem(long todoItemId);
+
+    public void finalise();
 }

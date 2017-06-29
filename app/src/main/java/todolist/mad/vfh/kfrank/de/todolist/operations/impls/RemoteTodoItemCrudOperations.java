@@ -131,4 +131,9 @@ public class RemoteTodoItemCrudOperations extends AbstractRemoteOperations<TodoI
         }
         return item;
     }
+
+    @Override
+    public void finalise() {
+        // do nothing
+    }
 }

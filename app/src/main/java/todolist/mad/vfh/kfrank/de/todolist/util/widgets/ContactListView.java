@@ -37,4 +37,12 @@ public class ContactListView extends ListView {
         }
         super.onDraw(canvas);
     }
+
+    /*
+     * Dieses Widget wird benötigt, um eine ListView zu erstellen, welcher ihre Größe immer an ihre
+     * Child-Elemente richtet.
+     * Normale ListViews benötigen eine feste Höhenangabe (z.B. "match_parent" oder eine statische
+     * dp Angabe), durch die obige Implementierung der onDraw() Methode kann jedoch "wrap_content"
+     * genutzt werden.
+     */
 }

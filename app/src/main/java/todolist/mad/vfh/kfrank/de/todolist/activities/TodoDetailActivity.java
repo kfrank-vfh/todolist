@@ -107,6 +107,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.equals(addContactItem)) {
             callContactPickerIntent();
+            return true;
         } else if (item.equals(saveTodoItem)) {
             returnToOverview(Codes.Response.SAVE_ITEM_CODE);
             return true;

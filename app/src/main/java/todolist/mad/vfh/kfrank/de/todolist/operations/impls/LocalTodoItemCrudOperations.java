@@ -19,6 +19,7 @@ import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.ITodoItemCrudOp
 
 public class LocalTodoItemCrudOperations extends AbstractContactResolverOperations implements ITodoItemCrudOperations {
 
+    private static final String DATABASE_NAME = "todoitems";
     private static final String TABLE_NAME = "todoitems";
 
     private static final String COLUMN_ID = "id";
@@ -44,8 +45,8 @@ public class LocalTodoItemCrudOperations extends AbstractContactResolverOperatio
 
     public LocalTodoItemCrudOperations(Context context, IContactAccessOperations contactAccessOperations) {
         super(contactAccessOperations);
-        context.deleteDatabase("de.kfrank.vfh.mad.todolist"); // TODO Zeile löschen
-        this.dataBase = context.openOrCreateDatabase("de.kfrank.vfh.mad.todolist", SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        // context.deleteDatabase(DATABASE_NAME); // TODO remove comment marks for empty local state
+        this.dataBase = context.openOrCreateDatabase(DATABASE_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
         if (this.dataBase.getVersion() == 0) {
             dataBase.setLocale(Locale.getDefault());
             dataBase.setVersion(1);
@@ -140,8 +141,8 @@ public class LocalTodoItemCrudOperations extends AbstractContactResolverOperatio
         return item;
     }
 
-    public void closeDataBase() {
-        // TODO irgendwo muss das noch aufgerufen werden
+    @Override
+    public void finalise() {
         this.dataBase.close();
     }
 }
