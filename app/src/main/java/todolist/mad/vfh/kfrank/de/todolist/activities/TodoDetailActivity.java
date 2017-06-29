@@ -33,13 +33,14 @@ import todolist.mad.vfh.kfrank.de.todolist.model.TodoItem;
 import todolist.mad.vfh.kfrank.de.todolist.operations.interfaces.IContactAccessOperations;
 import todolist.mad.vfh.kfrank.de.todolist.util.adapters.ContactListAdapter;
 import todolist.mad.vfh.kfrank.de.todolist.util.reductions.EmptyAsyncTask;
+import todolist.mad.vfh.kfrank.de.todolist.util.widgets.DateTimePicker;
 
 public class TodoDetailActivity extends AppCompatActivity {
 
     // VIEWS
     private EditText nameView;
     private EditText descriptionView;
-    private EditText dueDateView;
+    private DateTimePicker dueDateView;
     private Switch doneView;
     private Switch favouriteView;
 
@@ -70,7 +71,8 @@ public class TodoDetailActivity extends AppCompatActivity {
         // get all views
         nameView = (EditText) findViewById(R.id.name);
         descriptionView = (EditText) findViewById(R.id.description);
-        dueDateView = (EditText) findViewById(R.id.dueDate);
+        dueDateView = (DateTimePicker) findViewById(R.id.dueDate);
+        dueDateView.setDateTimeFormat(TodoItem.dueDateFormat);
         doneView = (Switch) findViewById(R.id.done);
         favouriteView = (Switch) findViewById(R.id.favourite);
         ListView contactListView = (ListView) findViewById(R.id.contactList);
@@ -79,59 +81,12 @@ public class TodoDetailActivity extends AppCompatActivity {
         item = (TodoItem) getIntent().getExtras().get(Codes.Extra.ITEM);
         nameView.setText(item.getName());
         descriptionView.setText(item.getDescription());
-        dueDateView.setText(item.getDueDate() == null ? null : TodoItem.dueDateFormat.format(item.getDueDate()));
+        dueDateView.setDateTime(item.getDueDate());
         doneView.setChecked(item.isDone());
         favouriteView.setChecked(item.isFavourite());
         contactListAdapter = new ContactListAdapter(this);
         contactListAdapter.addAll(item.getContacts());
         contactListView.setAdapter(contactListAdapter);
-
-        // set listener
-        dueDateView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Date dueDate = TodoItem.dueDateFormat.parse(dueDateView.getText().toString());
-                    Calendar calendar = new GregorianCalendar();
-                    calendar.setTime(dueDate);
-                    showDatePickerDialog(calendar);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void showDatePickerDialog(final Calendar calendar) {
-        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                showTimePickerDialog(calendar);
-            }
-        };
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog dialog = new DatePickerDialog(this, listener, year, month, dayOfMonth);
-        dialog.show();
-    }
-
-    private void showTimePickerDialog(final Calendar calendar) {
-        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-                dueDateView.setText(TodoItem.dueDateFormat.format(calendar.getTime()));
-            }
-        };
-        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        TimePickerDialog dialog = new TimePickerDialog(this, listener, hourOfDay, minute, true);
-        dialog.show();
     }
 
     @Override
@@ -293,12 +248,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         item.setName((name == null || name.trim().isEmpty()) ? null : name);
         String description = descriptionView.getText().toString();
         item.setDescription((description == null || description.trim().isEmpty()) ? null : description);
-        try {
-            String dueDateString = dueDateView.getText().toString();
-            item.setDueDate((dueDateString == null | dueDateString.trim().isEmpty()) ? null : TodoItem.dueDateFormat.parse(dueDateString));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        item.setDueDate(dueDateView.getDateTime());
         item.setDone(doneView.isChecked());
         item.setFavourite(favouriteView.isChecked());
         for (int i = 0; i < contactListAdapter.getCount(); i++) {

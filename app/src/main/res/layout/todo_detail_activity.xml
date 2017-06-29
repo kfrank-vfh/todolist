@@ -40,13 +40,11 @@
             android:layout_height="wrap_content"
             android:text="@string/todo_detail_due_date_label"/>
 
-        <EditText
+        <todolist.mad.vfh.kfrank.de.todolist.util.widgets.DateTimePicker
             android:id="@+id/dueDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/todo_detail_due_date_hint"
-            android:focusable="false"
-            android:enabled="true"
             android:drawableLeft="@drawable/calendar_icon"/>
 
         <Switch
