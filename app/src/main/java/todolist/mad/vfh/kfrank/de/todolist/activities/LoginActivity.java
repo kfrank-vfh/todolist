@@ -85,7 +85,7 @@ public class LoginActivity extends Activity {
         });
 
         // handler for email und password evaluation
-        //emailField.setText("s@bht.de"); // TODO remove comment marks for quicker login
+        //emailField.setText("s@bht.de"); // TODO remove comment marks for faster login
         emailField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        //passwordField.setText("000000"); // TODO remove comment marks for quicker login
+        //passwordField.setText("000000"); // TODO remove comment marks for faster login
         passwordField.addTextChangedListener(new AbstractTextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

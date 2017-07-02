@@ -52,7 +52,7 @@ public class TodoListApplication extends Application {
         return hasConnection;
     }
 
-    public String getWorkingRemoteAddress() {
+    private String getWorkingRemoteAddress() {
         for (String url : Arrays.asList("http://192.168.2.101:8080/api")) { // TODO ggfs. URLs hinzufügen, wenn diese nicht funktioniert
             if (new RemoteTodoItemCrudOperations(url, contactAccessOperations).hasConnection()) {
                 return url;

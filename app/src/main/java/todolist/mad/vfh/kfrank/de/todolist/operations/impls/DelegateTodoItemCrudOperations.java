@@ -40,10 +40,6 @@ public class DelegateTodoItemCrudOperations implements ITodoItemCrudOperations {
         }
     }
 
-    public RemoteTodoItemCrudOperations getRemoteTodoItemCrudOperations() {
-        return remoteTodoItemCrudOperations;
-    }
-
     public LocalTodoItemCrudOperations getLocalTodoItemCrudOperations() {
         return localTodoItemCrudOperations;
     }
